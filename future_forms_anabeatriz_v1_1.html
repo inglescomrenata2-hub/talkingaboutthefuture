@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talking about the Future</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.12.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root{--accent:#E24C3F;--accent-bg:#FCE9E7;--ink:#1A1A1A;--muted:#666;}
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,"Segoe UI",Calibri,Arial,sans-serif;color:var(--ink);background:#fafafa;margin:0;padding:24px 12px 60px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;background:#fff;padding:36px 40px;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.08);}
+  h1{color:var(--accent);font-size:26px;margin:0 0 6px;}
+  h2{color:var(--accent);font-size:19px;margin:34px 0 12px;border-bottom:2px solid var(--accent-bg);padding-bottom:6px;}
+  .meta{margin:0 0 14px;font-size:14px;}
+  .meta em{color:var(--muted);}
+  .instructions{background:#fff8e6;border-left:4px solid #E8B93A;padding:10px 14px;font-size:14px;font-style:italic;color:#555;}
+  .box{background:var(--accent-bg);border-left:4px solid var(--accent);padding:14px 18px;text-align:center;color:#8A2E23;font-style:italic;font-size:14.5px;}
+  .endings{background:#f6f6f6;border:1px solid #e2e2e2;border-radius:6px;padding:14px 18px;font-size:14.5px;margin-top:10px;}
+  .endings p{margin:6px 0;}
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14.5px;}
+  th{background:var(--ink);color:#fff;text-align:left;padding:8px 12px;}
+  td{padding:8px 12px;border-bottom:1px solid #eee;}
+  select{padding:5px 8px;border:1px solid #ccc;border-radius:4px;font-size:14px;background:#fff;}
+  ol{padding-left:20px;}
+  ol li{margin-bottom:14px;font-size:15px;}
+  input.gap{border:none;border-bottom:2px solid #bbb;background:transparent;font-size:15px;font-family:inherit;padding:2px 4px;width:190px;color:var(--accent);font-weight:600;}
+  input.gap:focus{outline:none;border-bottom-color:var(--accent);}
+  .mc-item{margin-bottom:16px;font-size:15px;}
+  .mc-options{margin-top:4px;padding-left:18px;}
+  .mc-options label{margin-right:18px;font-size:14px;color:#444;cursor:pointer;}
+  input[type=radio]{margin-right:5px;}
+  textarea{width:100%;border:1px solid #ccc;border-radius:6px;padding:12px;font-family:inherit;font-size:14.5px;resize:vertical;}
+  input.long{width:100%;border:none;border-bottom:2px solid #bbb;background:transparent;font-size:14.5px;font-family:inherit;padding:4px 2px;margin:4px 0 10px;}
+  input.long:focus{outline:none;border-bottom-color:var(--accent);}
+  .check-btn{margin-top:14px;background:var(--accent);color:#fff;border:none;padding:9px 18px;border-radius:20px;font-size:13.5px;cursor:pointer;font-weight:600;}
+  .check-btn:hover{background:#c93b2e;}
+  .answers{margin-top:12px;background:#f4f9f4;border-left:4px solid #4a9d5b;padding:12px 16px;font-size:14px;color:#2e5c38;}
+  .hidden{display:none;}
+  .footer-actions{margin-top:40px;text-align:center;}
+  .save-btn{background:#1a7a3c;color:#fff;border:none;padding:12px 26px;border-radius:22px;font-size:15px;cursor:pointer;font-weight:700;box-shadow:0 2px 6px rgba(26,122,60,.35);}
+  .save-btn:hover{background:#146030;}
+  .save-btn:disabled{background:#9bbfa6;cursor:wait;}
+  .save-note{font-size:12.5px;color:#888;margin:10px 0 0;}
+  .pdf-name-row{margin:14px 0;display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;}
+  .pdf-name-row input{border:1px solid #ccc;border-radius:6px;padding:8px 10px;font-size:14px;font-family:inherit;width:260px;}
+  .timer{display:flex;align-items:center;gap:14px;margin:12px 0 18px;padding:10px 14px;background:#fafafa;border:1px solid #eee;border-radius:10px;}
+  .timer svg{width:64px;height:64px;flex-shrink:0;}
+  .timer .ring-bg{fill:none;stroke:var(--accent-bg);stroke-width:7;}
+  .timer .ring{fill:none;stroke:var(--accent);stroke-width:7;stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 1s linear;}
+  .timer .t-num{font-size:15px;font-weight:700;fill:var(--ink);}
+  .timer .t-btns{display:flex;gap:6px;flex-wrap:wrap;}
+  .timer button{border:1px solid var(--accent);background:#fff;color:var(--accent);border-radius:16px;padding:5px 12px;font-size:12.5px;font-weight:600;cursor:pointer;}
+  .timer button.t-main{background:var(--accent);color:#fff;}
+  .timer.danger .ring{stroke:#c0281b;}
+  .timer.danger svg{animation:pulse 1s ease-in-out infinite;}
+  .timer.done .t-num{fill:#c0281b;}
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+</style>
+</head>
+<body>
+<div class="wrap" id="pdfContent">
+
+  <h1>Talking about the Future</h1>
+  <p class="meta"><strong>Aluno(a):</strong> <span id="studentNameDisplay">___________</span> &nbsp;|&nbsp; <em>Future forms: present continuous, be going to & will — practice, writing & speaking</em></p>
+  <p class="instructions">Preencha aqui mesmo, sem sair da página. Suas respostas ficam salvas automaticamente. No final, clique em "Salvar como PDF".</p>
+
+  <h2>Como funciona</h2>
+  <div class="box">
+    <strong>PRESENT CONTINUOUS</strong> = plano já combinado/agendado (tem data, hora, outra pessoa, ingresso…)<br>
+    <em>I'm meeting Sarah for lunch on Friday.</em><br><br>
+    <strong>BE GOING TO</strong> = intenção, algo que você já decidiu antes · previsão com evidência (você está vendo)<br>
+    <em>I'm going to take a pottery class next year. · Look at those clouds — it's going to rain.</em><br><br>
+    <strong>WILL</strong> = decisão na hora · oferta · promessa · previsão de opinião (I think, probably, I'm sure)<br>
+    <em>I'll get it! · I'll help you. · I won't tell anyone. · I think it'll be fine.</em><br><br>
+    💡 Bônus: horários fixos (aula, voo, filme) usam <strong>present simple</strong>: <em>The class starts at 9.</em>
+  </div>
+
+
+  <h1 style="margin-top:40px;font-size:23px;">Exercício 1 — Practice</h1>
+
+  <h2>Parte 1 — Complete as frases</h2>
+  <p>Complete com <em>present continuous</em>, <em>be going to</em> ou <em>will</em> + o verbo entre parênteses. Pense no <strong>porquê</strong> de cada escolha.</p>
+  <ol>
+    <li>A: The phone's ringing! &nbsp;B: Don't worry, I <input class="gap"> (get) it.</li>
+    <li>I <input class="gap"> (meet) a new client at the studio at 3 tomorrow. We booked it last week.</li>
+    <li>Look at that sky! It <input class="gap"> (rain) any minute.</li>
+    <li>I've made up my mind: I <input class="gap"> (go back) to work in January.</li>
+    <li>I think AI <input class="gap"> (change) the way people learn languages.</li>
+    <li>A: I can't open this jar. &nbsp;B: Give it to me, I <input class="gap"> (do) it.</li>
+    <li>We <input class="gap"> (fly) to Miami on Friday. The tickets are already booked!</li>
+    <li>She's not paying attention to her form at all. She <input class="gap"> (hurt) her back.</li>
+    <li>I promise I <input class="gap"> (not / tell) anyone about your surprise party.</li>
+    <li>Guess what? My sister <input class="gap"> (have) a baby in March! 🍼</li>
+  </ol>
+  <button class="check-btn no-pdf" onclick="toggle('ans1')">Mostrar respostas</button>
+  <div id="ans1" class="answers hidden">
+    1. 'll get (decisão na hora) &nbsp;|&nbsp; 2. 'm meeting (agendado) &nbsp;|&nbsp; 3. 's going to rain (evidência) &nbsp;|&nbsp; 4. 'm going to go back (decisão já tomada; <em>I'm going back</em> também funciona se já está tudo combinado) &nbsp;|&nbsp; 5. will change (opinião) &nbsp;|&nbsp; 6. 'll do (oferta) &nbsp;|&nbsp; 7. 're flying (agendado) &nbsp;|&nbsp; 8. 's going to hurt (evidência) &nbsp;|&nbsp; 9. won't tell (promessa) &nbsp;|&nbsp; 10. 's having / 's going to have (as duas são naturais)
+  </div>
+
+
+  <h2>Parte 2 — Escolha a opção correta</h2>
+  <div class="mc-item">1. "Are you free tonight?" — "No, sorry. I ______ dinner with my in-laws."
+    <div class="mc-options">
+      <label><input type="radio" name="q1" value="a">'ll have</label>
+      <label><input type="radio" name="q1" value="b">'m having</label>
+      <label><input type="radio" name="q1" value="c">have</label>
+    </div></div>
+  <div class="mc-item">2. "It's so hot in here!" — "Oh, ______ open the window."
+    <div class="mc-options">
+      <label><input type="radio" name="q2" value="a">I'll</label>
+      <label><input type="radio" name="q2" value="b">I'm opening</label>
+      <label><input type="radio" name="q2" value="c">I open</label>
+    </div></div>
+  <div class="mc-item">3. "Why did you buy so many eggs?" — "I ______ a cake for Lucy's birthday."
+    <div class="mc-options">
+      <label><input type="radio" name="q3" value="a">'ll make</label>
+      <label><input type="radio" name="q3" value="b">'m going to make</label>
+      <label><input type="radio" name="q3" value="c">make</label>
+    </div></div>
+  <div class="mc-item">4. "I don't think that new studio ______ very successful. The location is terrible."
+    <div class="mc-options">
+      <label><input type="radio" name="q4" value="a">will be</label>
+      <label><input type="radio" name="q4" value="b">is being</label>
+      <label><input type="radio" name="q4" value="c">is going</label>
+    </div></div>
+  <div class="mc-item">5. "Oh no, I left my wallet at home!" — "Don't worry, I ______ for lunch."
+    <div class="mc-options">
+      <label><input type="radio" name="q5" value="a">'m paying</label>
+      <label><input type="radio" name="q5" value="b">'ll pay</label>
+      <label><input type="radio" name="q5" value="c">pay</label>
+    </div></div>
+  <div class="mc-item">6. "Any plans for the weekend?" — "Not really. I ______ at home and rest."
+    <div class="mc-options">
+      <label><input type="radio" name="q6" value="a">'m just staying</label>
+      <label><input type="radio" name="q6" value="b">just stay</label>
+      <label><input type="radio" name="q6" value="c">'ll staying</label>
+    </div></div>
+  <div class="mc-item">7. "The class ______ at 9 a.m. sharp, so don't be late tomorrow!"
+    <div class="mc-options">
+      <label><input type="radio" name="q7" value="a">starts</label>
+      <label><input type="radio" name="q7" value="b">will starting</label>
+      <label><input type="radio" name="q7" value="c">is going start</label>
+    </div></div>
+  <div class="mc-item">8. "Watch out! You ______ fall off the reformer!"
+    <div class="mc-options">
+      <label><input type="radio" name="q8" value="a">will</label>
+      <label><input type="radio" name="q8" value="b">'re going to</label>
+      <label><input type="radio" name="q8" value="c">are</label>
+    </div></div>
+  <button class="check-btn no-pdf" onclick="toggle('ans2')">Mostrar respostas</button>
+  <div id="ans2" class="answers hidden">
+    1. 'm having (combinado) &nbsp;|&nbsp; 2. I'll (decisão na hora) &nbsp;|&nbsp; 3. 'm going to make (intenção — ela já tinha decidido antes de comprar) &nbsp;|&nbsp; 4. will be (opinião com "I don't think") &nbsp;|&nbsp; 5. 'll pay (oferta) &nbsp;|&nbsp; 6. 'm just staying (plano; <em>I'm just going to stay</em> também serve) &nbsp;|&nbsp; 7. starts (horário fixo) &nbsp;|&nbsp; 8. 're going to (evidência — dá pra ver que vai cair)
+  </div>
+
+
+  <h2>Parte 3 — Sobre você</h2>
+  <p>Complete as frases falando da sua vida de verdade.</p>
+  <p>This weekend I'm… <input class="long"></p>
+  <p>After my year off, I'm going to… <input class="long"></p>
+  <p>I think in ten years, Pilates will… <input class="long"></p>
+  <p>The next time I go to Brazil, I'm definitely going to… <input class="long"></p>
+  <p>One thing I promise I'll never do again is… <input class="long"></p>
+  <button class="check-btn no-pdf" onclick="toggle('ans3')">Mostrar respostas</button>
+  <div id="ans3" class="answers hidden">
+    Respostas pessoais. Confira se: depois de <em>I'm…</em> veio verbo com <strong>-ing</strong> · depois de <em>going to</em> e <em>will</em> veio o verbo na forma base (<em>going to <strong>travel</strong></em>, nunca "going to traveling") · <em>won't</em> = will not.
+  </div>
+
+
+  <hr style="border:none;border-top:3px solid var(--accent);margin:56px 0 0;">
+  <h1 style="margin-top:28px;font-size:23px;">Exercício 2 — Writing</h1>
+
+  <h2>Parte 4 — My next chapter</h2>
+  <p>Escreva uma mensagem longa (<strong>150 a 200 palavras</strong>) pra uma amiga no Brasil contando os seus planos pros próximos meses: o que já está combinado, o que você pretende fazer depois do ano sabático e o que você acha que vai acontecer.</p>
+  <p><strong>Checklist:</strong> pelo menos <strong>2 frases com present continuous</strong> (planos marcados), <strong>3 com going to</strong> (intenções) e <strong>3 com will</strong> (previsões, promessas ou ofertas).</p>
+  <div class="endings">
+    <p><em>Começo sugerido:</em> "Hey girl! It's been forever! So, a lot is happening over here…"</p>
+  </div>
+  <textarea rows="10" placeholder="Write your message here..."></textarea>
+  <button class="check-btn no-pdf" onclick="toggle('ans4')">Mostrar respostas</button>
+  <div id="ans4" class="answers hidden">
+    Exemplo de resposta:<br>
+    <em>"Hey girl! It's been forever! So, a lot is happening over here. My parents are visiting in December — they're landing on the 15th and we're spending Christmas in Orlando. 🎄 After that, I'm going to start working again. I'm not going to go back to a full-time schedule, though. I'm going to teach Pilates three days a week and maybe take a course in clinical Pilates. Honestly, I think it'll be good for me. I'm sure I'll miss the free time, but I'll be more motivated. And next year I'm going to visit Brazil, I promise! I'll let you know the dates as soon as I buy the tickets. We'll go to that café we love!"</em><br><br>
+    Pontos pra corrigir: plano com data/pessoa → present continuous · intenção → going to · promessa/opinião → will.
+  </div>
+
+
+  <h2>Parte 5 — Mensagem rápida</h2>
+  <p>Responda esta mensagem em <strong>3 a 4 frases</strong>. Diga o que você já tem marcado e ofereça uma alternativa.</p>
+  <div class="endings">
+    <p>💬 <em>"OMG I'm going to be in your city next weekend!! Are you free on Saturday?? 😍"</em></p>
+  </div>
+  <textarea rows="5" placeholder="Write your reply here..."></textarea>
+  <button class="check-btn no-pdf" onclick="toggle('ans5')">Mostrar respostas</button>
+  <div id="ans5" class="answers hidden">
+    Exemplo:<br>
+    <em>"Nooo, I'm teaching all Saturday morning and I'm going to a friend's birthday party at night. 😩 But I'm free on Sunday! I'll pick you up at your hotel and we'll go to brunch. I promise I won't be late this time!"</em>
+  </div>
+
+
+  <hr style="border:none;border-top:3px solid var(--accent);margin:56px 0 0;">
+  <h1 style="margin-top:28px;font-size:23px;">Exercício 3 — Speaking</h1>
+  <p class="instructions">Atividade pra fazer em voz alta, na aula. Use os campos só pra anotar palavras-chave. O timer serve pra você falar sem parar até o tempo acabar.</p>
+
+  <h2>Parte 6 — Crystal ball 🔮</h2>
+  <p>Dê a sua opinião sobre o futuro de cada tema por <strong>1 minuto</strong>. Use <em>will / won't / I think… / probably</em> pra opinião e <em>going to</em> quando tiver uma evidência ("Look at…", "Everyone is already…").</p>
+  <div class="timer no-pdf" data-seconds="60"></div>
+  <p>1. The future of Pilates and fitness: what will gyms and studios look like in 10 years?<br>Notas: <input class="long"></p>
+  <p>2. AI and health: will AI replace physical therapists?<br>Notas: <input class="long"></p>
+  <p>3. Viral wellness trends (cold plunges, mouth taping, "75 Hard"…): which ones are going to disappear?<br>Notas: <input class="long"></p>
+  <p>4. You, five years from now: where will you live? What will you be doing?<br>Notas: <input class="long"></p>
+  <button class="check-btn no-pdf" onclick="toggle('ans6')">Mostrar respostas</button>
+  <div id="ans6" class="answers hidden">
+    Frases úteis:<br>
+    I think studios will become more personalized. · I don't think AI will replace PTs, but it'll probably help with diagnosis. · Cold plunges are going to disappear — everyone is already getting bored of them. · In five years, I'll probably be living in… / I'll have my own studio.<br><br>
+    Lembrete: <em>I don't think it will…</em> soa mais natural que <em>I think it won't…</em>.
+  </div>
+
+
+  <h2>Parte 7 — Role-play: making plans</h2>
+  <p>A professora faz o papel da outra pessoa. Responda usando o que você <strong>já tem combinado</strong> (present continuous), o que você <strong>pretende fazer</strong> (going to) e <strong>ofereça soluções na hora</strong> (will).</p>
+  <div class="timer no-pdf" data-seconds="120"></div>
+  <p><strong>Card A — The invitation.</strong> A friend invites you to three different things this week. You're busy with most of them, so explain why and suggest another day.<br>Notas: <input class="long"></p>
+  <p><strong>Card B — The new client.</strong> Someone calls the studio wanting a Pilates class this week. Check your schedule, tell her what's already booked and find a time.<br>Notas: <input class="long"></p>
+  <p><strong>Card C — The emergency.</strong> Your neighbor knocks on your door: her car won't start and she has a job interview in 40 minutes. React and offer help.<br>Notas: <input class="long"></p>
+  <button class="check-btn no-pdf" onclick="toggle('ans7')">Mostrar respostas</button>
+  <div id="ans7" class="answers hidden">
+    Frases úteis:<br>
+    A: "I'd love to, but I'm having dinner with my husband's family on Thursday. How about Saturday? I'll bring the wine!"<br>
+    B: "Let me check… I'm teaching from 8 to 12 on Tuesday, but I'm free on Wednesday afternoon. I'll send you the address."<br>
+    C: "Oh no! Don't worry, I'll drive you. Give me two minutes, I'll get my keys. You're going to be fine!"
+  </div>
+
+
+  <h2>Parte 8 — Quick-fire round</h2>
+  <p>Responda cada pergunta <strong>o mais rápido possível</strong>, com 1 ou 2 frases. Tente terminar todas antes do tempo acabar!</p>
+  <div class="timer no-pdf" data-seconds="90"></div>
+  <ol>
+    <li>What are you doing after this class?</li>
+    <li>Are you going to travel anywhere this year?</li>
+    <li>What will you probably eat for dinner tonight?</li>
+    <li>What's one thing you're going to change in your routine next month?</li>
+    <li>Who are you seeing this weekend?</li>
+    <li>What do you think will be the next big viral trend?</li>
+  </ol>
+  <p>Notas: <input class="long"></p>
+  <button class="check-btn no-pdf" onclick="toggle('ans8')">Mostrar respostas</button>
+  <div id="ans8" class="answers hidden">
+    Respostas pessoais. Pontos pra professora observar:<br>
+    ✔ a resposta usa a mesma estrutura da pergunta? (<em>What are you doing…? → I'm…</em>; <em>Are you going to…? → Yes, I'm going to…</em>)<br>
+    ✔ <em>will</em> aparece com <em>probably / I think</em> (ordem natural: <em>I'll probably…</em> / <em>I probably won't…</em>)<br>
+    ✔ pronúncia das contrações: <em>I'll, you'll, it'll, won't, gonna</em>
+  </div>
+
+
+  <div class="footer-actions no-pdf">
+    <p class="save-note">💾 Suas respostas ficam salvas automaticamente neste navegador enquanto você digita.</p>
+    <div class="pdf-name-row">
+      <label for="studentNameInput" style="font-size:13.5px;color:#555;">Seu nome (aparece no PDF):</label>
+      <input type="text" id="studentNameInput" placeholder="Ex: Ana Beatriz">
+    </div>
+    <button class="save-btn" id="saveBtn" onclick="saveAsPDF()">💾 Salvar como PDF</button>
+  </div>
+
+</div>
+
+<script>
+  const STORAGE_KEY = 'future_forms_anabeatriz_v1';
+
+
+  // ----- daqui pra baixo é o motor: NÃO precisa mexer -----
+  function getFields(){
+    return Array.from(document.querySelectorAll('#pdfContent input, #pdfContent select, #pdfContent textarea'));
+  }
+  function saveAnswers(){
+    const data = {};
+    getFields().forEach((el, i) => {
+      if(el.type === 'radio'){ if(el.checked) data['radio_' + el.name] = el.value; }
+      else { data['f' + i] = el.value; }
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+  function loadAnswers(){
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    getFields().forEach((el, i) => {
+      if(el.type === 'radio'){ if(data['radio_' + el.name] === el.value) el.checked = true; }
+      else if(('f' + i) in data){ el.value = data['f' + i]; }
+    });
+  }
+  function toggle(id){ document.getElementById(id).classList.toggle('hidden'); }
+  function autoGrow(el){ el.style.height = 'auto'; el.style.height = (el.scrollHeight + 4) + 'px'; }
+  document.querySelectorAll('textarea').forEach(t => t.addEventListener('input', () => autoGrow(t)));
+
+  const nameInput = document.getElementById('studentNameInput');
+  const nameDisplay = document.getElementById('studentNameDisplay');
+  nameInput.addEventListener('input', () => {
+    nameDisplay.textContent = nameInput.value.trim() || '___________';
+  });
+
+  document.addEventListener('input', saveAnswers);
+  document.addEventListener('change', saveAnswers);
+  window.addEventListener('load', () => {
+    loadAnswers();
+    document.querySelectorAll('textarea').forEach(t => autoGrow(t));
+    nameDisplay.textContent = nameInput.value.trim() || '___________';
+  });
+
+  // ----- timers de speaking -----
+  const C = 2*Math.PI*26;
+  function fmt(s){ return Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); }
+  document.querySelectorAll('.timer').forEach(tm => {
+    const base = parseInt(tm.dataset.seconds,10);
+    tm.innerHTML = '<svg viewBox="0 0 64 64"><circle class="ring-bg" cx="32" cy="32" r="26"/><circle class="ring" cx="32" cy="32" r="26"/><text class="t-num" x="32" y="37" text-anchor="middle"></text></svg>'
+      + '<div class="t-btns"><button type="button" class="t-main" data-act="start">▶ Start</button><button type="button" data-act="reset">↺ Reset</button>'
+      + '<button type="button" data-act="set" data-s="30">30s</button><button type="button" data-act="set" data-s="60">1 min</button><button type="button" data-act="set" data-s="120">2 min</button></div>';
+    tm._total = base; tm._left = base; tm._id = null; draw(tm);
+  });
+  function draw(tm){
+    const ring = tm.querySelector('.ring');
+    ring.style.strokeDasharray = C;
+    ring.style.strokeDashoffset = C*(1 - tm._left/tm._total);
+    tm.querySelector('.t-num').textContent = fmt(tm._left);
+    tm.classList.toggle('danger', tm._left <= 10 && tm._left > 0 && tm._id !== null);
+    tm.classList.toggle('done', tm._left === 0);
+  }
+  function stop(tm){ clearInterval(tm._id); tm._id = null; tm.querySelector('[data-act=start]').textContent = '▶ Start'; draw(tm); }
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.timer button'); if(!b) return;
+    const tm = b.closest('.timer'); const act = b.dataset.act;
+    if(act === 'start'){
+      if(tm._id !== null){ stop(tm); return; }
+      if(tm._left === 0) tm._left = tm._total;
+      b.textContent = '❚❚ Pause';
+      tm._id = setInterval(() => { tm._left--; draw(tm); if(tm._left <= 0){ tm._left = 0; stop(tm); } }, 1000);
+      draw(tm);
+    } else if(act === 'reset'){ stop(tm); tm._left = tm._total; draw(tm); }
+    else if(act === 'set'){ stop(tm); tm._total = tm._left = parseInt(b.dataset.s,10); draw(tm); }
+  });
+
+  function saveAsPDF(){
+    const btn = document.getElementById('saveBtn');
+    btn.disabled = true; btn.textContent = '⏳ Gerando PDF...';
+    const noPdfEls = document.querySelectorAll('.no-pdf');
+    noPdfEls.forEach(el => el.style.visibility = 'hidden');
+    const el = document.getElementById('pdfContent');
+    const name = nameInput.value.trim() || 'aluno';
+    const fileName = STORAGE_KEY + '_' + name.replace(/[^a-z0-9]+/gi, '_') + '.pdf';
+    const opt = {
+      margin: [10, 10, 10, 10], filename: fileName,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+    html2pdf().set(opt).from(el).save().then(() => {
+      noPdfEls.forEach(el => el.style.visibility = ''); btn.disabled = false; btn.textContent = '💾 Salvar como PDF';
+    }).catch(() => {
+      noPdfEls.forEach(el => el.style.visibility = ''); btn.disabled = false; btn.textContent = '💾 Salvar como PDF';
+      alert('Não foi possível gerar o PDF. Tente novamente ou use Ctrl+P / Cmd+P.');
+    });
+  }
+</script>
+</body>
+</html>
